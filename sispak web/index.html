@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Sistem Pakar – Forward Chaining + CF</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:,">
+</head>
+<body>
+  <main class="container">
+    <h1>Sistem Pakar – Forward Chaining + Certainty Factor</h1>
+
+    <section class="panel">
+      <h2>Input Pasien</h2>
+
+      <div class="row">
+        <label>Jenis Kelamin</label>
+        <select id="G01">
+          <option value="0">Laki-laki</option>
+          <option value="0.0">Perempuan</option>
+        </select>
+      </div>
+
+      <div class="row">
+        <label>Umur (tahun) — G02</label>
+        <input id="G02" type="number" value="56">
+      </div>
+
+      <div class="row">
+        <label>Abdominal pain (0–10) — G03</label>
+        <input id="G03" type="range" min="0" max="10" value="9">
+      </div>
+
+      <div class="row">
+        <label>Vomiting severity (0–10) — G04</label>
+        <input id="G04" type="range" min="0" max="10" value="6">
+      </div>
+
+      <div class="row">
+        <label>Weight change (kg) — G11</label>
+        <input id="G11" type="number" step="0.1" value="0.9">
+      </div>
+
+      <div class="row">
+        <label>Temperature (°C) — G12</label>
+        <input id="G12" type="number" step="0.1" value="38.0">
+      </div>
+
+      <div class="row">
+        <label>Leukocytes (µL) — G27</label>
+        <input id="G27" type="number" value="26400">
+      </div>
+
+      <div class="row">
+        <label>Hemoglobin (g/dL) — G28</label>
+        <input id="G28" type="number" step="0.1" value="13.0">
+      </div>
+
+      <div class="actions">
+        <button id="runBtn">Run Inference</button>
+        <button id="resetBtn" onclick="location.reload()">Reset</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Log Perhitungan</h2>
+      <pre id="log" class="log">Klik "Run Inference" untuk memulai...</pre>
+    </section>
+
+    <section class="panel">
+      <h2>Hasil Diagnosa</h2>
+      <div id="results"></div>
+    </section>
+
+    <footer>
+      <p>© 2025 Sistem Pakar Forward Chaining + CF – Berdasarkan Soetanto et al. (2024) by randi dan thoriq</p>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "source": "Soetanto et al., 2024 (replikasi demo dinamis)",
+    "notes": "Versi dengan variasi CF, sequential dan parallel rules"
+  },
+  "interpolations": [
+    { "symptom": "G02", "type": "ascending", "params": { "A": 7.0, "B": 20.0, "min": 0, "max": 1, "measure": "year" } },
+    { "symptom": "G11", "type": "ascending", "params": { "A": 0.0, "B": 1.3, "min": 0, "max": 1, "measure": "kg" } },
+    { "symptom": "G12", "type": "descending", "params": { "C": 37.5, "D": 40.0, "min": 0, "max": 1, "measure": "C" } },
+    { "symptom": "G27", "type": "descending", "params": { "C": 10000.0, "D": 50000.0, "min": 0, "max": 1, "measure": "uL" } },
+    { "symptom": "G28", "type": "trapezoid", "params": { "A": 1.0, "B": 13.0, "C": 17.0, "D": 25.0, "min": 0, "max": 1, "measure": "g/dL" } }
+  ],
+  "rules": [
+    {
+      "id": "R1",
+      "if": ["G03", "G04", "G11"],
+      "then": "D01",
+      "cf": 0.35,
+      "note": "Peptic ulcer kemungkinan bila nyeri perut + muntah + penurunan berat badan"
+    },
+    {
+      "id": "R2",
+      "if": ["G02", "G03", "G12", "G27"],
+      "then": "D08",
+      "cf": 0.55,
+      "note": "Intestinal perforation kemungkinan bila usia >20, nyeri perut berat, suhu tinggi, leukosit tinggi"
+    },
+    {
+      "id": "R3",
+      "if": ["G12", "G27"],
+      "then": "Infection_suspect",
+      "cf": 0.4,
+      "note": "Kecurigaan infeksi bila suhu dan leukosit tinggi"
+    },
+    {
+      "id": "R4",
+      "if": ["Infection_suspect", "G28"],
+      "then": "Anemia_suspect",
+      "cf": 0.45,
+      "note": "Kombinasi infeksi dan Hb rendah menunjukkan anemia"
+    },
+    {
+      "id": "R5",
+      "if": ["G27"],
+      "then": "Leukocytosis",
+      "cf": 0.25,
+      "note": "Leukosit tinggi → leukositosis"
+    },
+    {
+      "id": "R6",
+      "if": ["Leukocytosis", "G12"],
+      "then": "Infection_confirmed",
+      "cf": 0.6,
+      "note": "Infeksi terkonfirmasi jika leukosit tinggi & suhu tinggi"
+    },
+    {
+      "id": "R7",
+      "if": ["Infection_confirmed", "G03"],
+      "then": "D14",
+      "cf": 0.5,
+      "note": "Acute pancreatitis bila nyeri perut kuat dan infeksi aktif"
+    },
+    {
+      "id": "R8",
+      "if": ["D08", "Infection_confirmed"],
+      "then": "Urgent_surgery",
+      "cf": 0.7,
+      "note": "Jika perforasi + infeksi → butuh operasi segera"
+    }
+  ]
+}
